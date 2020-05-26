@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './searchMovie.module.css'
 import axios from 'axios'
-import Loader from './Loader.gif'
+// import Loader from './Loader.gif'
 // import PageNavigation from './PageNavigation'
 
 class searchMovie extends React.Component{
@@ -12,19 +12,19 @@ class searchMovie extends React.Component{
             results : {},
             loading: false,
             message: '',
-            totalResults: 0,
-			totalPages: 0,
-			currentPageNo: 0
+            // totalResults: 0,
+			// totalPages: 0,
+			// currentPageNo: 0
 
         };
         this.cancel = '';
     }
 
-    getPageCount = (total, denominator) =>{
-        const divisible = 0 === total % denominator;
-        const valueToBeAdded = divisible ? 0 : 1;
-        return Math.floor(total/denominator) + valueToBeAdded;
-    };
+    // getPageCount = (total, denominator) =>{
+    //     const divisible = 0 === total % denominator;
+    //     const valueToBeAdded = divisible ? 0 : 1;
+    //     return Math.floor(total/denominator) + valueToBeAdded;
+    // };
 
     fetchSearchResults = (updatedPageNo = '', query) =>{
         const pageNumber = updatedPageNo ? `&page=${updatedPageNo}` : '';  
@@ -40,17 +40,17 @@ class searchMovie extends React.Component{
         })
             .then(res => {
                 // console.log(res)
-                const total = res.data.totalResults;
-                const totalPagesCount = this.getPageCount(total, 5);
+                // const total = res.data.totalResults;
+                // const totalPagesCount = this.getPageCount(total, 5);
                 const resultNotFoundMsg = ! res.data.Search.length
 										? 'There are no more search results. Please try a new search'
                                         : '';
                 this.setState( {
                     results: res.data.Search,
                     message: resultNotFoundMsg,
-                    totalResults:total,
-                    totalPages: totalPagesCount,
-                    currentPageNo: updatedPageNo,
+                    // totalResults:total,
+                    // totalPages: totalPagesCount,
+                    // currentPageNo: updatedPageNo,
                     loading: false
                 })
 
@@ -77,16 +77,16 @@ class searchMovie extends React.Component{
         }
     };
 
-    handlePageClick = ( type ) => {
-        event.preventDefault();
-        const updatePageNo = 'prev' === type 
-                            ? this.state.currentPageNo-1 
-                            : this.state.currentPageNo+1;
-        if( ! this.state.loading  ) {
-            this.setState( { loading: true, message: '' }, () => {
-                this.fetchSearchResults( updatePageNo, this.state.query );
-            } );
-    }
+    // handlePageClick = ( type ) => {
+    //     event.preventDefault();
+    //     const updatePageNo = 'prev' === type 
+    //                         ? this.state.currentPageNo-1 
+    //                         : this.state.currentPageNo+1;
+    //     if( ! this.state.loading  ) {
+    //         this.setState( { loading: true, message: '' }, () => {
+    //             this.fetchSearchResults( updatePageNo, this.state.query );
+    //         } );
+    // }
     renderSearchResults = () => {
         const {results} = this.state;
         if(Object.keys(results).length && results.length) {
@@ -111,11 +111,11 @@ class searchMovie extends React.Component{
     }
 
     render(){
-        const {query, loading, message, currentPageNo, totalPages } =  this.state;
+        const {query, loading, message } =  this.state;
         // const query = this.state.query;
         // console.log(this.state)
-        const showPrevLink = 1 < currentPageNo;
-        const showNextLink = totalPages > currentPageNo;
+        // const showPrevLink = 1 < currentPageNo;
+        // const showNextLink = totalPages > currentPageNo;
 
         return(
             <>
@@ -136,7 +136,7 @@ class searchMovie extends React.Component{
 				{message && <p className={styles.message}>{ message }</p>}
 
             {/* loader  */}
-            <img src={ Loader } className={`searchLoading ${ loading ? 'show' : 'hide' }`} alt="loader"/>
+            {/* <img src={ Loader } className={`searchLoading ${ loading ? 'show' : 'hide' }`} alt="loader"/> */}
            
             {/* <PageNavigation 
                     loading= {loading}
